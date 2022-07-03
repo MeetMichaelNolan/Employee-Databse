@@ -1,0 +1,172 @@
+#
+# Michael Nolan
+# 3 June 2022
+# Employee Database Application
+
+import random
+import time
+
+# Database's
+ID = {}
+email = {}
+job = {}
+salary = {}
+password = {}
+
+def addEmployee():
+    while True:
+        num = random.randint(10000000, 99999999)
+        if num in ID.keys():
+            continue
+        else:
+            break
+
+    userName = input("Enter Full Name of Employee: ")
+    userEmail = input("Enter Employee Email: ")
+    userJob = input("Enter Employee Job: ")
+    userSalary = float(input("Enter Employee Salary: "))
+    userPassword = input("Enter Password: ")
+
+    ID[num] = userName
+    email[num] = userEmail
+    job[num] = userJob
+    salary[num] = userSalary
+    password[num] = userPassword
+
+    print(f"Your Employee ID #: {num}")
+    time.sleep(2.5)
+
+def display():
+    while True:
+        employeeID = int(input("Enter Employee ID: "))
+        if employeeID in ID.keys():
+            break
+        else:
+            print(f"{employeeID} does not exist.")
+
+    while True:
+        num = input("Enter 1 for full name of employee, Enter 2 for employee email, Enter 3 for job of employee, Enter 4 for salary of employee, Enter 0 to quit program: ")
+
+        if num == '0':
+            break
+        elif num == '1':
+            count = 0
+            while count != 3:
+                userPass = input("Enter password to continue: ")
+                if userPass != password[employeeID]:
+                    print("Incorrect password.")
+                    count += 1
+                else:
+                    print(f"Employee Name: {ID[employeeID]}")
+                    break
+            if count >= 3:
+                print(f"You have been locked out for 1 minute.")
+                time.sleep(15)
+                return
+
+        elif num == '2':
+            count = 0
+            while count != 3:
+                userPass = input("Enter password to continue: ")
+                if userPass != password[employeeID]:
+                    print("Incorrect password.")
+                    count += 1
+                else:
+                    print(f"Employee Email: {email[employeeID]}")
+                    break
+            if count >= 3:
+                print(f"You have been locked out for 1 minute.")
+                time.sleep(15)
+                return
+
+        elif num == '3':
+            count = 0
+            while count != 3:
+                userPass = input("Enter password to continue: ")
+                if userPass != password[employeeID]:
+                    print("Incorrect password.")
+                    count += 1
+                else:
+                    print(f"Employee Job: {job[employeeID]}")
+                    break
+            if count >= 3:
+                print(f"You have been locked out for 1 minute.")
+                time.sleep(15)
+                return
+
+        elif num == '4':
+            count = 0
+            while count != 3:
+                userPass = input("Enter password to continue: ")
+                if userPass != password[employeeID]:
+                    print("Incorrect password.")
+                    count += 1
+                else:
+                    print(f"Salary of Employee: {salary[employeeID]}")
+                    break
+            if count >= 3:
+                print(f"You have been locked out for 1 minute.")
+                time.sleep(15)
+                return
+
+def deleteEmployee():
+    while True:
+        employeeID = int(input("Enter Employee ID to be Deleted: "))
+        if employeeID in ID.keys():
+            break
+        elif employeeID == 0:
+            return
+        else:
+            print(f"{employeeID} does not exist. Enter 0 to return or try again.")
+
+    while True:
+        ans = input(f"You are permanently deleting Employee {employeeID}. Do you wish to continue? (y/n): ").lower()
+        if ans == 'y':
+            while True:
+                count = 0
+                while count != 3:
+                    userPass = input("Enter password to continue: ")
+                    if userPass != password[employeeID]:
+                        print("Incorrect password.")
+                        count += 1
+                    else:
+                        del ID[employeeID]
+                        del email[employeeID]
+                        del job[employeeID]
+                        del salary[employeeID]
+                        del password[employeeID]
+                        print(f"{employeeID} has been deleted.")
+                        return
+                if count >= 3:
+                    print(f"You have been locked out for 1 minute.")
+                    time.sleep(15)
+                    return
+        elif ans == 'n':
+            return
+        else:
+            print("Invalid entry, try again.")
+
+def main():
+    while True:
+        answer = input("Enter 1 to add employee, Enter 2 to search for an employee, Enter 3 to delete an employee, Enter 0 to stop program: ")
+
+        try:
+             answer = int(answer)
+        except:
+            print("Invalid entry, try again.")
+            continue
+
+        if answer == 0:
+            print("Thanks for using Nolan Database.")
+            quit()
+
+        elif answer == 1:
+            addEmployee()
+
+        elif answer == 2:
+            display()
+
+        elif answer == 3:
+            deleteEmployee()
+
+main()
